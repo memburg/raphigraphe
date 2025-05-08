@@ -55,18 +55,18 @@ This will load the image sample.png, process it, and output the ASCII art to the
 
 ```
 raphigraphe/
-├── [pom.xml](http://_vscodecontentref_/0)                  # Maven configuration file
+├── pom.xml
 ├── src/
 │   ├── main/
 │   │   ├── java/
 │   │   │   └── io/
 │   │   │       └── github/
-│   │   │           └── [Raphigraphe.java](http://_vscodecontentref_/1)  # Main application code
+│   │   │           └── Raphigraphe.java
 │   │   ├── resources/
-│   │       ├── braille-characters/       # Braille character images
-│   │       ├── output-results/           # Output directory for results
-│   │       └── test-images/              # Sample test images
-└── target/                               # Build output directory
+│   │       ├── braille-characters/  # Braille character images
+│   │       ├── output-results/      # Output directory for results
+│   │       └── test-images/         # Sample test images
+└── target/                          # Build output directory
 ```
 
 ## How It Works
