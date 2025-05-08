@@ -56,15 +56,15 @@ public class Raphigraphe implements Callable<Integer> {
 
     public static Imajine resize(Imajine image, int newWidth, int newHeight) throws IOException {
         Imajine resizedImage = new Imajine(newWidth, newHeight);
+        double widthRatio = (double) image.getWidth() / newWidth;
+        double heightRatio = (double) image.getHeight() / newHeight;
 
         for (int y = 0; y < newHeight; y++) {
             for (int x = 0; x < newWidth; x++) {
-                int originalX = (int) ((double) x / newWidth * image.getWidth());
-                int originalY = (int) ((double) y / newHeight * image.getHeight());
+                int originalX = (int) (x * widthRatio);
+                int originalY = (int) (y * heightRatio);
                 Pixel oPixel = image.getPixel(originalX, originalY);
-                Pixel nPixel = new Pixel(x, y, oPixel.getRed(), oPixel.getGreen(), oPixel.getBlue());
-
-                resizedImage.setPixel(nPixel);
+                resizedImage.setPixel(new Pixel(x, y, oPixel.getRed(), oPixel.getGreen(), oPixel.getBlue()));
             }
         }
 
@@ -156,13 +156,18 @@ public class Raphigraphe implements Callable<Integer> {
 
     @Override
     public Integer call() throws Exception {
-        final String SOURCE_IMAGE = ROOT_DIR + "/raphigraphe/src/main/resources/test-images/mr-incredible.png";
+        final String SOURCE_IMAGE = ROOT_DIR + source;
 
+        System.out.println("Loading image...");
         Imajine imajine = new Imajine(SOURCE_IMAGE);
-        Adjustments.threshold(imajine, threshold);
+        System.out.println("Cropping image...");
         Imajine cropped = centerCrop(imajine);
+        System.out.println("Resizing image...");
         Imajine resized = resize(cropped, 50, 52);
+        System.out.println("Performing thresholding...");
+        Adjustments.threshold(resized, threshold);
 
+        System.out.println("Converting image to ASCII art...");
         List<List<String>> asciiImage = getAsciiImage(resized);
         printAsciiImage(asciiImage);
         System.out.println("ASCII art generated successfully!");
