@@ -45,7 +45,7 @@ public class Raphigraphe implements Callable<Integer> {
         int originalWidth = image.getWidth();
         int originalHeight = image.getHeight();
 
-        if (image.getWidth() > image.getHeight() || image.getWidth() == image.getHeight()) {
+        if (originalWidth > originalHeight || originalWidth == originalHeight) {
             int newWidth = (int) (originalWidth * 0.961538461538);
             return crop(image, 0, 0, newWidth, originalHeight);
         } else {
